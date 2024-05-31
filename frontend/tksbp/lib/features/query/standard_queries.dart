@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'types.dart';
 
 abstract class StandardQueries {
@@ -10,6 +8,22 @@ abstract class StandardQueries {
     const ServiceRevenueForYearQuery(),
     const TopG10ClientsRevenueQuery(),
     const TopGManagersYearQuery(),
+    const DefiniteServiceSelectionQuery(
+      [
+        'Sonya',
+        'katya',
+        'Mireku djima',
+        'Karina',
+      ],
+    ),
+    const ContractsWithDefiniteServiceSelectionQuery(
+      [
+        'Sonya',
+        'katya',
+        'Mireku djima',
+        'Karina',
+      ],
+    ),
   ];
 }
 
@@ -82,18 +96,11 @@ class TopGManagersYearQuery extends QueryMenuItem {
 }
 
 class DefiniteServiceSelectionQuery extends QuerySubMenuItem<String> {
-  const DefiniteServiceSelectionQuery();
+  const DefiniteServiceSelectionQuery(super.queryParameters);
 
   @override
   String get description =>
       'Выборка контрактов с определенной услугой за последние 3 месяца';
-
-  @override
-  Widget build(BuildContext context,
-      void Function(String query, String description)? onPressed) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
 
   @override
   String query(String parameter) =>
@@ -102,20 +109,13 @@ class DefiniteServiceSelectionQuery extends QuerySubMenuItem<String> {
 
 class ContractsWithDefiniteServiceSelectionQuery
     extends QuerySubMenuItem<String> {
-  const ContractsWithDefiniteServiceSelectionQuery();
+  const ContractsWithDefiniteServiceSelectionQuery(super.queryParameters);
 
   @override
   String get description =>
       'Выборка контрактов с определенной услугой в текущем году';
 
   @override
-  Widget build(BuildContext context,
-      void Function(String query, String description)? onPressed) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-
-  @override
-  String query(parameter) =>
+  String query(String parameter) =>
       'SELECT "c"."ContractID", "co"."CompanyID", "co"."CompanyName", "cl"."ClientID", "cl"."ClientName", "cl"."City", "cl"."Address", "cl"."ClientPhone", "ts"."TypeServiceID", "ts"."TypeServiceName", "s"."ServiceID", "s"."ServiceName", "c"."SigningDate", "c"."StartDate", "c"."EndDate", "c"."PayDate", "c"."Price", "m"."ManagerID", "m"."ManagerName", "m"."ManagerPhone" FROM "Contracts" "c" JOIN "Service" "s" ON "c"."ServiceID" = "s"."ServiceID" JOIN "Company" "co" ON "c"."CompanyID" = "co"."CompanyID" JOIN "Clients" "cl" ON "c"."ClientID" = "cl"."ClientID" JOIN "TypeService" "ts" ON "c"."TypeServiceID" = "ts"."TypeServiceID" JOIN "Managers" "m" ON "c"."ManagerID" = "m"."ManagerID" WHERE "ts"."TypeServiceName" = \'{TYPE SERVICE NAME AS STR!!!}\' AND EXTRACT(YEAR FROM "c"."SigningDate") = EXTRACT(YEAR FROM CURRENT_DATE);';
 }

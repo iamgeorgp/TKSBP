@@ -28,21 +28,29 @@ class QueryItemDecorator extends StatelessWidget {
       );
 }
 
-class QuerySubItemDecorator extends StatelessWidget {
+class QuerySubItemDecorator<T> extends StatelessWidget {
+  final List<T> queryParameters;
   final String description;
-  final String query;
+  final String Function(T parameter) query;
   final void Function(String query, String description)? onPressed;
   const QuerySubItemDecorator({
     required this.query,
     required this.description,
+    required this.queryParameters,
     this.onPressed,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) => SubmenuButton(
-        menuChildren: [],
-        // onPressed: () => onPressed?.call(query, description),
+        menuChildren: [
+          for (final parameter in queryParameters)
+            QueryItemDecorator(
+              description: parameter.toString(),
+              query: query(parameter),
+              onPressed: onPressed,
+            ),
+        ],
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 4),
           child: ConstrainedBox(

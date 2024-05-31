@@ -35,7 +35,8 @@ abstract class QueryMenuItem implements QueryMenuItemInterface {
 }
 
 abstract class QuerySubMenuItem<T> implements QueryMenuItemInterface {
-  const QuerySubMenuItem();
+  final List<T> queryParameters;
+  const QuerySubMenuItem(this.queryParameters);
 
   @mustBeOverridden
   @override
@@ -46,10 +47,13 @@ abstract class QuerySubMenuItem<T> implements QueryMenuItemInterface {
     throw UnimplementedError();
   }
 
-  @mustBeOverridden
   @override
   Widget build(BuildContext context,
-      void Function(String query, String description)? onPressed) {
-    throw UnimplementedError();
-  }
+          void Function(String query, String description)? onPressed) =>
+      QuerySubItemDecorator<T>(
+        description: description,
+        query: query,
+        queryParameters: queryParameters,
+        onPressed: onPressed,
+      );
 }

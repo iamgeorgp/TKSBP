@@ -2,32 +2,29 @@ import pandas as pd
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-
-def generator_scan_contracts(df_contracts: pd.DataFrame, df_service: pd.DataFrame) -> None:
+def generate_contract_scans(contracts_df: pd.DataFrame, services_df: pd.DataFrame) -> None:
     """
-    Generates contract scans based on transferred data from dataframes.
+    Generates contract scans based on data from DataFrames.
 
     Arguments:
-    df_contracts (pd.DataFrame): A dataframe with information about contracts.
-    df_service (pd.DataFrame): DataFrame with information about the services provided.
+    contracts_df (pd.DataFrame): DataFrame with contract information.
+    services_df (pd.DataFrame): DataFrame with service information.
 
     Return Value:
-    None: The function returns no values, it generates contract scans based on the data passed in.
+    None: Generates contract scans based on the provided data.
     """
-    # --- Main Paths ---
-    script_directory = os.path.dirname(os.path.abspath(__file__)) # Script path
-    data_directory = os.path.join(os.path.dirname(script_directory), "data")    # data folder path
-    gen_data_directory = os.path.join(os.path.dirname(script_directory), "generated_data\scan_contract")  # generated_data folder path
-    def create_contract(fields, index):
-        # Loading a contract template
-        contract_template = Image.open(f'{data_directory}\\default.jpg')  
+    # Main Paths
+    script_directory = os.path.dirname(os.path.abspath(__file__)) 
+    data_directory = os.path.join(os.path.dirname(script_directory), "data")
+    gen_data_directory = os.path.join(os.path.dirname(script_directory), "generated_data", "scan_contract")
 
-        font = ImageFont.truetype('arial.ttf', size=10) 
-
-        # Create an ImageDraw object for image editing
+    def create_contract(fields, contract_id):
+        # Load contract template
+        contract_template = Image.open(os.path.join(data_directory, "default.jpg"))
+        font = ImageFont.truetype('arial.ttf', size=10)
         draw = ImageDraw.Draw(contract_template)
 
-        # Set the position and text for each field
+        # Define text positions
         text_positions = {
             'Signing date': (400, 100),
             'Contract ID': (270, 130),
@@ -41,19 +38,19 @@ def generator_scan_contracts(df_contracts: pd.DataFrame, df_service: pd.DataFram
             'Price': (320, 500)
         }
 
-        # Add the text of specified fields to the image
+        # Add text to image
         for field, position in text_positions.items():
             if field in fields:
                 draw.text(position, f"{field}: {fields[field]}", font=font, fill='black')
 
-        # Saving the modified image to a file with a unique name for each line
-        # Compression with quality parameter added
-        contract_template.save(f'{gen_data_directory}\contract_{fields["Contract ID"]}.jpg', quality=80)  
+        # Save modified image
+        contract_template.save(os.path.join(gen_data_directory, f"contract_{contract_id}.jpg"), quality=80)
 
-    merged_df = pd.merge(df_contracts, df_service, on=['ServiceID', 'TypeServiceID'], how='inner')
+    # Merge contract and service data
+    merged_df = pd.merge(contracts_df, services_df, on=['ServiceID', 'TypeServiceID'], how='inner')
     
+    # Iterate through merged data and generate contracts
     for index, row in merged_df.iterrows():
-        # Create a dictionary for each line of the dataframe, which is passed to the create_contract function
         contract_fields = {
             'Signing date': row['SigningDate'],
             'Contract ID': row['ContractID'],
@@ -64,6 +61,6 @@ def generator_scan_contracts(df_contracts: pd.DataFrame, df_service: pd.DataFram
             'Start date': row['StartDate'],
             'End date': row['EndDate'],
             'Pay date': row['PayDate'],
-            'Price': str(row['Price']) + '$'
+            'Price': f"{row['Price']}$"
         }
-        create_contract(contract_fields, index)
+        create_contract(contract_fields, row['ContractID'])

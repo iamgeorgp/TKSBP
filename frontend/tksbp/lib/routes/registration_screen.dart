@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:i18n/i18n.dart';
 import 'package:topg/topg.dart';
@@ -42,6 +43,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          leading: kIsWeb ? const SizedBox() : null,
           title: Text(S.of(context).registration),
           centerTitle: true,
           actions: [
@@ -84,7 +86,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: MainButton(
                       title: Text(S.of(context).signUp),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await context.router.pushAndPopUntil(
+                          const TableRoute(),
+                          predicate: (route) => false,
+                        );
+                      },
                       type: canSend ? TopGType.action : TopGType.disabled,
                     ),
                   ),

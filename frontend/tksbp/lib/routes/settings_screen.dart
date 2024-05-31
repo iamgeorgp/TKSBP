@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:i18n/i18n.dart';
 import 'package:topg/topg.dart';
@@ -20,6 +21,7 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: kIsWeb ? const SizedBox() : null,
         title: Text(S.of(context).settings),
         centerTitle: true,
       ),

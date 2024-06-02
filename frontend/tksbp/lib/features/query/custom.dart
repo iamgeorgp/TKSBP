@@ -1,7 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:i18n/i18n.dart';
 
 class CustomQuery extends StatelessWidget {
-  const CustomQuery({super.key});
+  final TextEditingController controller;
+  const CustomQuery({
+    required this.controller,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -11,15 +17,16 @@ class CustomQuery extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Column(
               children: [
-                const Text('Custom query'),
                 Expanded(
                   child: TextField(
+                    controller: controller,
                     minLines: null,
                     maxLines: null,
                     expands: true,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Запрос',
+                      hintText:
+                          '${S.of(context).sql} ${S.of(context).queryS.toLowerCase()}',
                     ),
                     onChanged: (value) {},
                   ),

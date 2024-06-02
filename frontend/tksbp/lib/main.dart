@@ -9,6 +9,7 @@ import 'package:topg/topg.dart';
 import 'di/di.dart';
 import 'features/log/log.dart';
 import 'routes/app_router/app_router.dart';
+import 'storage/users_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,23 +18,24 @@ void main() async {
   getIt.get<Log>().d('TopG initialized');
   await ScarlettLocalization.init();
   getIt.get<Log>().d('ScarlettLocalization initialized');
+  await getIt.get<UsersStorage>().init();
   runApp(
     const ProviderScope(
       child: TopG(
-        child: WebLaba2App(),
+        child: TKSBPApp(),
       ),
     ),
   );
 }
 
-class WebLaba2App extends StatefulWidget {
-  const WebLaba2App({super.key});
+class TKSBPApp extends StatefulWidget {
+  const TKSBPApp({super.key});
 
   @override
-  State<WebLaba2App> createState() => _WebLaba2AppState();
+  State<TKSBPApp> createState() => _TKSBPAppState();
 }
 
-class _WebLaba2AppState extends State<WebLaba2App> {
+class _TKSBPAppState extends State<TKSBPApp> {
   final _router = AppRouter();
   @override
   Widget build(BuildContext context) {

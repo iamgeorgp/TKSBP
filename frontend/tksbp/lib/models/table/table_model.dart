@@ -11,4 +11,6 @@ class TableModel with _$TableModel {
   }) = _TableModelTabel;
 
   const factory TableModel.loading() = _TableModelLoading;
+
+  const factory TableModel.error({required String message}) = _TableModelError;
 }

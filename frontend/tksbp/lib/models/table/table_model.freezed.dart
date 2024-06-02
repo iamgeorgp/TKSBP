@@ -20,18 +20,21 @@ mixin _$TableModel {
   TResult when<TResult extends Object?>({
     required TResult Function(List<List<dynamic>> table) table,
     required TResult Function() loading,
+    required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<List<dynamic>> table)? table,
     TResult? Function()? loading,
+    TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<List<dynamic>> table)? table,
     TResult Function()? loading,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$TableModel {
   TResult map<TResult extends Object?>({
     required TResult Function(_TableModelTabel value) table,
     required TResult Function(_TableModelLoading value) loading,
+    required TResult Function(_TableModelError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TableModelTabel value)? table,
     TResult? Function(_TableModelLoading value)? loading,
+    TResult? Function(_TableModelError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TableModelTabel value)? table,
     TResult Function(_TableModelLoading value)? loading,
+    TResult Function(_TableModelError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -148,6 +154,7 @@ class _$TableModelTabelImpl implements _TableModelTabel {
   TResult when<TResult extends Object?>({
     required TResult Function(List<List<dynamic>> table) table,
     required TResult Function() loading,
+    required TResult Function(String message) error,
   }) {
     return table(this.table);
   }
@@ -157,6 +164,7 @@ class _$TableModelTabelImpl implements _TableModelTabel {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<List<dynamic>> table)? table,
     TResult? Function()? loading,
+    TResult? Function(String message)? error,
   }) {
     return table?.call(this.table);
   }
@@ -166,6 +174,7 @@ class _$TableModelTabelImpl implements _TableModelTabel {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<List<dynamic>> table)? table,
     TResult Function()? loading,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (table != null) {
@@ -179,6 +188,7 @@ class _$TableModelTabelImpl implements _TableModelTabel {
   TResult map<TResult extends Object?>({
     required TResult Function(_TableModelTabel value) table,
     required TResult Function(_TableModelLoading value) loading,
+    required TResult Function(_TableModelError value) error,
   }) {
     return table(this);
   }
@@ -188,6 +198,7 @@ class _$TableModelTabelImpl implements _TableModelTabel {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TableModelTabel value)? table,
     TResult? Function(_TableModelLoading value)? loading,
+    TResult? Function(_TableModelError value)? error,
   }) {
     return table?.call(this);
   }
@@ -197,6 +208,7 @@ class _$TableModelTabelImpl implements _TableModelTabel {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TableModelTabel value)? table,
     TResult Function(_TableModelLoading value)? loading,
+    TResult Function(_TableModelError value)? error,
     required TResult orElse(),
   }) {
     if (table != null) {
@@ -256,6 +268,7 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
   TResult when<TResult extends Object?>({
     required TResult Function(List<List<dynamic>> table) table,
     required TResult Function() loading,
+    required TResult Function(String message) error,
   }) {
     return loading();
   }
@@ -265,6 +278,7 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<List<dynamic>> table)? table,
     TResult? Function()? loading,
+    TResult? Function(String message)? error,
   }) {
     return loading?.call();
   }
@@ -274,6 +288,7 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<List<dynamic>> table)? table,
     TResult Function()? loading,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -287,6 +302,7 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(_TableModelTabel value) table,
     required TResult Function(_TableModelLoading value) loading,
+    required TResult Function(_TableModelError value) error,
   }) {
     return loading(this);
   }
@@ -296,6 +312,7 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TableModelTabel value)? table,
     TResult? Function(_TableModelLoading value)? loading,
+    TResult? Function(_TableModelError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -305,6 +322,7 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TableModelTabel value)? table,
     TResult Function(_TableModelLoading value)? loading,
+    TResult Function(_TableModelError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -316,4 +334,145 @@ class _$TableModelLoadingImpl implements _TableModelLoading {
 
 abstract class _TableModelLoading implements TableModel {
   const factory _TableModelLoading() = _$TableModelLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$TableModelErrorImplCopyWith<$Res> {
+  factory _$$TableModelErrorImplCopyWith(_$TableModelErrorImpl value,
+          $Res Function(_$TableModelErrorImpl) then) =
+      __$$TableModelErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$TableModelErrorImplCopyWithImpl<$Res>
+    extends _$TableModelCopyWithImpl<$Res, _$TableModelErrorImpl>
+    implements _$$TableModelErrorImplCopyWith<$Res> {
+  __$$TableModelErrorImplCopyWithImpl(
+      _$TableModelErrorImpl _value, $Res Function(_$TableModelErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$TableModelErrorImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TableModelErrorImpl implements _TableModelError {
+  const _$TableModelErrorImpl({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'TableModel.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TableModelErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TableModelErrorImplCopyWith<_$TableModelErrorImpl> get copyWith =>
+      __$$TableModelErrorImplCopyWithImpl<_$TableModelErrorImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<List<dynamic>> table) table,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<List<dynamic>> table)? table,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<List<dynamic>> table)? table,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TableModelTabel value) table,
+    required TResult Function(_TableModelLoading value) loading,
+    required TResult Function(_TableModelError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_TableModelTabel value)? table,
+    TResult? Function(_TableModelLoading value)? loading,
+    TResult? Function(_TableModelError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TableModelTabel value)? table,
+    TResult Function(_TableModelLoading value)? loading,
+    TResult Function(_TableModelError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TableModelError implements TableModel {
+  const factory _TableModelError({required final String message}) =
+      _$TableModelErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$TableModelErrorImplCopyWith<_$TableModelErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

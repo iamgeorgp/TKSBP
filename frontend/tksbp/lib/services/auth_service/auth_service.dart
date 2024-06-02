@@ -1,19 +1,31 @@
 // ignore_for_file: comment_references
 
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../clients/tksbp_client.dart';
-import '../../models/token_response/token_response.dart';
+import '../../models/auth_model/auth_model.dart';
 import '../../models/verify_code_model/verify_code_model.dart';
-import '../../storage/token_storage/token_storage.dart';
+import '../../storage/users_storage.dart';
 import '../exceptions/service_exception.dart';
 import 'exceptions/auth_service_exception.dart';
 
+@lazySingleton
 class AuthService {
   final Dio _client;
-  final TokenStorage _storage;
+  final UsersStorage _usersStorage;
 
-  const AuthService(@TKSBPClient this._client, this._storage);
+  const AuthService(@TKSBPClient this._client, this._usersStorage);
+
+  Future<AuthModel> login(User user) async {
+    final auth = await _usersStorage.login(user);
+    return auth;
+  }
+
+  Future<AuthModel> register(User user) async {
+    final auth = await _usersStorage.register(user);
+    return auth;
+  }
 
   ///
   /// ### Запрос на отправку кода подтверждения
@@ -41,15 +53,15 @@ class AuthService {
   ///
   Future<bool> verifyCode({required VerifyCodeModel verifyCodeModel}) async {
     try {
-      final response = await _client.post<Map<String, dynamic>>(
-        'auth/verify-code',
-        data: verifyCodeModel.toJson(),
-      );
+      // final response = await _client.post<Map<String, dynamic>>(
+      //   'auth/verify-code',
+      //   data: verifyCodeModel.toJson(),
+      // );
 
-      final tokens = TokenResponse.fromJson(response.data!);
+      // final tokens = TokenResponse.fromJson(response.data!);
 
-      await _storage.setAccessToken(tokens.accessToken);
-      await _storage.setRefreshToken(tokens.refreshToken);
+      // await _storage.setAccessToken(tokens.accessToken);
+      // await _storage.setRefreshToken(tokens.refreshToken);
 
       return true;
     } on Exception catch (exception) {
@@ -64,17 +76,17 @@ class AuthService {
   ///
   Future<bool> refreshToken() async {
     try {
-      final token = await _storage.getRefreshToken();
+      // final token = await _storage.getRefreshToken();
 
-      final response = await Dio().post<Map<String, dynamic>>(
-        '${_client.options.baseUrl}auth/refresh',
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
-      );
+      // final response = await Dio().post<Map<String, dynamic>>(
+      //   '${_client.options.baseUrl}auth/refresh',
+      //   options: Options(headers: {'Authorization': 'Bearer $token'}),
+      // );
 
-      final tokens = TokenResponse.fromJson(response.data!);
+      // final tokens = TokenResponse.fromJson(response.data!);
 
-      await _storage.setAccessToken(tokens.accessToken);
-      await _storage.setRefreshToken(tokens.refreshToken);
+      // await _storage.setAccessToken(tokens.accessToken);
+      // await _storage.setRefreshToken(tokens.refreshToken);
 
       return true;
     } on Exception catch (exception) {
@@ -89,7 +101,7 @@ class AuthService {
   ///
   Future<bool> logout() async {
     try {
-      final refreshToken = await _storage.getRefreshToken();
+      // final refreshToken = await _storage.getRefreshToken();
 
       await _client.post<dynamic>(
         'auth/logout',
@@ -98,8 +110,8 @@ class AuthService {
         },
       );
 
-      await _storage.removeAccessToken();
-      await _storage.removeRefreshToken();
+      // await _storage.removeAccessToken();
+      // await _storage.removeRefreshToken();
 
       return true;
     } on Exception catch (exception) {

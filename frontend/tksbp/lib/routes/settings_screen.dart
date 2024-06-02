@@ -1,15 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:i18n/i18n.dart';
 import 'package:topg/topg.dart';
 
+import '../di/tksbp_di.dart';
+import 'app_router/app_router.dart';
+
 @RoutePage()
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authNotifier = ref.watch(TKSBPDi.authNotifier.notifier);
+    final auth = ref.watch(TKSBPDi.authNotifier);
+    final localeIsLast =
+        auth.maybeMap(orElse: () => false, unauthorized: (_) => true);
     final theme = TopGTheme.of(context);
     final themeMode = theme.mode;
     final themeTitle = themeMode == TopGMode.light
@@ -44,7 +52,7 @@ class SettingsScreen extends StatelessWidget {
               SettingsTyle(
                 title: S.of(context).language,
                 icon: Icons.language,
-                lastInBlock: true,
+                lastInBlock: localeIsLast,
                 trailing: Text(
                   S.of(context).localeFull,
                   style: const TextStyle(color: TopGColors.blueCrayola),
@@ -52,6 +60,23 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () async {
                   await ScarlettLocalization.switchLocaleOf(context);
                 },
+              ),
+              ...auth.maybeMap(
+                orElse: () => [
+                  SettingsTyle(
+                    title: S.of(context).leave,
+                    icon: Icons.account_circle_rounded,
+                    lastInBlock: true,
+                    onTap: () async {
+                      authNotifier.leave();
+                      await context.router.pushAndPopUntil(
+                        const AuthorizationRoute(),
+                        predicate: (_) => false,
+                      );
+                    },
+                  ),
+                ],
+                unauthorized: (_) => [],
               ),
             ],
           ),

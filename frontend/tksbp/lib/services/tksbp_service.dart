@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../clients/tksbp_client.dart';
+import '../models/query_response/query_response.dart';
 
 @singleton
 class TKSBPService {
@@ -9,29 +10,8 @@ class TKSBPService {
 
   const TKSBPService(@TKSBPClient this._client);
 
-  Future<String?> testSend() async {
+  Future<QueryResponse> executeQuery(String query) async {
     try {
-      final response = await _client.post<String>(
-        '',
-        data: 'SELECT * FROM "TypeService"',
-        options: Options(
-          responseType: ResponseType.plain,
-        ),
-      );
-      print(response.data);
-      return response.data;
-    } on DioException catch (_) {
-      return null;
-    }
-  }
-
-  Future<String?> executeQuery(String query) async {
-    try {
-      // final response = await _client.request<String>(
-      //   '/v1/sql/custom',
-      //   data: query,
-      //   options: Options(method: 'POST'),
-      // );
       final response = await _client.post<String>(
         '/v1/sql/custom',
         data: query,
@@ -39,9 +19,10 @@ class TKSBPService {
           responseType: ResponseType.plain,
         ),
       );
-      return response.data;
+      return QueryResponse.data(data: response.data!);
     } on DioException catch (e) {
-      return null;
+      return QueryResponse.error(
+          message: e.response?.data.toString() ?? 'Упс, произошла ошибка(');
     }
   }
 }

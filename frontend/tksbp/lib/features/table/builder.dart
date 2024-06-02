@@ -19,6 +19,10 @@ class TableBuilder extends StatelessWidget {
         (j) => Text(
           data[i][j].toString(),
           textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: i == 0 ? 20 : null,
+            fontWeight: i == 0 ? FontWeight.bold : null,
+          ),
         ),
       ),
     );

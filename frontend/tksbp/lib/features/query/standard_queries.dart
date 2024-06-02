@@ -18,10 +18,11 @@ abstract class StandardQueries {
     ),
     const ContractsWithDefiniteServiceSelectionQuery(
       [
-        'Sonya',
-        'katya',
-        'Mireku djima',
-        'Karina',
+        'Стратегическое планирование',
+        'Оптимизация бизнес-процессов',
+        'Управление персоналом',
+        'Информационная безопасность',
+        'Управление активами и коммуникациями',
       ],
     ),
   ];
@@ -117,5 +118,5 @@ class ContractsWithDefiniteServiceSelectionQuery
 
   @override
   String query(String parameter) =>
-      'SELECT "c"."ContractID", "co"."CompanyID", "co"."CompanyName", "cl"."ClientID", "cl"."ClientName", "cl"."City", "cl"."Address", "cl"."ClientPhone", "ts"."TypeServiceID", "ts"."TypeServiceName", "s"."ServiceID", "s"."ServiceName", "c"."SigningDate", "c"."StartDate", "c"."EndDate", "c"."PayDate", "c"."Price", "m"."ManagerID", "m"."ManagerName", "m"."ManagerPhone" FROM "Contracts" "c" JOIN "Service" "s" ON "c"."ServiceID" = "s"."ServiceID" JOIN "Company" "co" ON "c"."CompanyID" = "co"."CompanyID" JOIN "Clients" "cl" ON "c"."ClientID" = "cl"."ClientID" JOIN "TypeService" "ts" ON "c"."TypeServiceID" = "ts"."TypeServiceID" JOIN "Managers" "m" ON "c"."ManagerID" = "m"."ManagerID" WHERE "ts"."TypeServiceName" = \'{TYPE SERVICE NAME AS STR!!!}\' AND EXTRACT(YEAR FROM "c"."SigningDate") = EXTRACT(YEAR FROM CURRENT_DATE);';
+      'SELECT "c"."ContractID", "co"."CompanyID", "co"."CompanyName", "cl"."ClientID", "cl"."ClientName", "cl"."City", "cl"."Address", "cl"."ClientPhone", "ts"."TypeServiceID", "ts"."TypeServiceName", "s"."ServiceID", "s"."ServiceName", "c"."SigningDate", "c"."StartDate", "c"."EndDate", "c"."PayDate", "c"."Price", "m"."ManagerID", "m"."ManagerName", "m"."ManagerPhone" FROM "Contracts" "c" JOIN "Service" "s" ON "c"."ServiceID" = "s"."ServiceID" JOIN "Company" "co" ON "c"."CompanyID" = "co"."CompanyID" JOIN "Clients" "cl" ON "c"."ClientID" = "cl"."ClientID" JOIN "TypeService" "ts" ON "c"."TypeServiceID" = "ts"."TypeServiceID" JOIN "Managers" "m" ON "c"."ManagerID" = "m"."ManagerID" WHERE "ts"."TypeServiceName" = \'${parameter}\' AND EXTRACT(YEAR FROM "c"."SigningDate") = EXTRACT(YEAR FROM CURRENT_DATE);';
 }

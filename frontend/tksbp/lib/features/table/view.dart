@@ -20,7 +20,10 @@ class TableView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 for (final cell in table[index])
-                  TestTableCellWrapper(child: cell),
+                  TestTableCellWrapper(
+                    child: cell,
+                    isEven: index.isEven,
+                  ),
               ],
             ),
           ),
@@ -28,35 +31,16 @@ class TableView extends StatelessWidget {
       );
 }
 
-// ListView
-//           Row(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               for (final cell in row) TestTableCellWrapper(child: cell),
-//             ],
-//           ),
-
-//  SingleChildScrollView(
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               for (final row in table)
-//                 Row(
-//                   mainAxisSize: MainAxisSize.min,
-//                   children: [
-//                     for (final cell in row) TestTableCellWrapper(child: cell),
-//                   ],
-//                 ),
-//             ],
-//           ),
-//         ),
-
 class TestTableCellWrapper extends StatelessWidget {
   final Widget? child;
   final TopGType type;
+  final TopGType secondType;
+  final bool isEven;
   const TestTableCellWrapper({
     required this.child,
+    this.isEven = true,
     this.type = TopGType.highlight,
+    this.secondType = TopGType.stress,
     super.key,
   });
 
@@ -67,7 +51,9 @@ class TestTableCellWrapper extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(),
-            color: type.resolveColor(context),
+            color: isEven
+                ? type.resolveColor(context)
+                : secondType.resolveColor(context),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
